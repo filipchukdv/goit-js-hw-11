@@ -8,7 +8,7 @@ export const fetchImages = async searchValue => {
     const response = await axios.get(
       `https://pixabay.com/api/?key=${KEY}&q=${searchValue}&image_type=photo&orientation=horizontal&safesearch=true&per_page=36&page=${currentPage}`
     );
-    if (response.ok) {
+    if (!response.ok) {
       Notify.failure('Error.More information in console');
       throw new Error(response.status);
     }

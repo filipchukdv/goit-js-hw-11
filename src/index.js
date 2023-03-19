@@ -24,14 +24,17 @@ async function onClick(e) {
   currentPage = 1;
   loadMorebutton.classList.add('visually-hidden');
   currentSearchValue = e.target.elements.searchQuery.value;
-  const response = await fetchImages(currentSearchValue);
-  const images = response.data.hits;
-  const totalHits = response.data.totalHits;
   if (currentSearchValue === '') {
     Notify.failure('Error! Type something.');
-
     return;
   }
+  const response = await fetchImages(currentSearchValue);
+  if (!response) {
+    Notify.failure('Server Error!');
+  }
+  const images = response.data.hits;
+  const totalHits = response.data.totalHits;
+
   if (images.length === 0) {
     Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.'
@@ -50,6 +53,9 @@ async function onLoadClick(e) {
   currentPage += 1;
   const searchValue = inputRef.textContent;
   const response = await fetchImages(currentSearchValue);
+  if (!response) {
+    Notify.failure('Server Error!');
+  }
   const images = response.data.hits;
   const totalHits = response.data.totalHits;
   const markup = createMarkup(images);
