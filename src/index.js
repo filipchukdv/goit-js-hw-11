@@ -31,6 +31,7 @@ async function onClick(e) {
   const response = await fetchImages(currentSearchValue);
   if (!response) {
     Notify.failure('Server Error!');
+    return;
   }
   const images = response.data.hits;
   const totalHits = response.data.totalHits;
@@ -55,6 +56,7 @@ async function onLoadClick(e) {
   const response = await fetchImages(currentSearchValue);
   if (!response) {
     Notify.failure('Server Error!');
+    return;
   }
   const images = response.data.hits;
   const totalHits = response.data.totalHits;
